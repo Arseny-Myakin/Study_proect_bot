@@ -3,8 +3,7 @@ from keyboards.inline import inline_menu_kb
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram import Router,F
-from aiogram.filters import Command
-from aiogram.types import Message, ReplyKeyboardMarkup, CallbackQuery
+from aiogram.types import Message, CallbackQuery
 from lexicons.lexicons_ru import MENU_TEXT,MENU_TEXT_OUR,MENU_TEXT0, DEL_MARKS_TXT,ADD_MARKS_TEXT,DEL_MARKS_TXT_K,DEL_MARKS_TXT_K1,ADD_MARKS_TEXT1
 from math import ceil
 
@@ -44,6 +43,7 @@ async def add_marks_handler(message: Message, state: FSMContext):
 @router.message(MarksStates.add_marks_state)
 async def process_marks(message: Message, state: FSMContext):
     data = await state.get_data()
+    await state.update_data({"marks":message.text})
     #await state.update_data(marks = data.get('marks','') + message.text)
 
     list_marks = list(map(int, list(message.text)))
@@ -51,7 +51,7 @@ async def process_marks(message: Message, state: FSMContext):
     add_sr = float(data.get('sr_add'))
     k = len(list_marks) * (add_sr - del_marks) / (5-add_sr)
 
-    await message.answer(f"{DEL_MARKS_TXT}  {str(round(del_marks,2))} \n  {DEL_MARKS_TXT_K(add_sr)}  {str(ceil(k))}  {DEL_MARKS_TXT_K1}")
+    await message.answer(f"{DEL_MARKS_TXT}  {str(round(del_marks,2))} \n {DEL_MARKS_TXT_K(add_sr)}  {str(ceil(k))}  {DEL_MARKS_TXT_K1}")
     await state.clear()
 
 
