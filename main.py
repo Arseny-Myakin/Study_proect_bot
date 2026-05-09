@@ -10,6 +10,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 async def main():
+    """Главная функция запуска бота"""
     bot = Bot(token = BOT_TOKEN)
     print(BOT_TOKEN)
     dp = Dispatcher()
@@ -18,6 +19,7 @@ async def main():
     dp.include_router(menu_router)
 
     print("[LOG] Бот запущен")
+
     await dp.start_polling(bot)
 
 run(main())

@@ -3,6 +3,7 @@ from lexicons.lexicons_ru import MAIN_MENU_BTNS
 
 
 async def menu_kb():
+    """Создает reply клавиатуру"""
     s=[]
     for text in MAIN_MENU_BTNS:
         button = KeyboardButton(

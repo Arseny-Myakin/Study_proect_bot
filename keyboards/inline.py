@@ -2,6 +2,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from lexicons.lexicons_ru import MAIN_MENU_BTNS_IN, MAIN_PROGMARKS_BTNS_IN
 
 async def inline_menu_kb():
+    """Создает inline клавиатуру"""
     s=[]
     for text,data in MAIN_MENU_BTNS_IN.items():
         button = InlineKeyboardButton(

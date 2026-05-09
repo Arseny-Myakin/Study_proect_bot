@@ -7,8 +7,7 @@ MENU_TEXT="Вот меню"
 MENU_TEXT0="О нас"
 MAIN_MENU_BTNS_IN = {
     "Добавить оценки": "addmarks",
-    "О нас":"about_bot",
-    "Исправить двойки":"progmarks"
+    "О нас":"about_bot"
 }
 MAIN_PROGMARKS_BTNS_IN = {
     "Исправить двойки":"progmarks"
