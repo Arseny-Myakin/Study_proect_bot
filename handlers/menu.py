@@ -2,9 +2,8 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram import Router,F
 from aiogram.types import Message, CallbackQuery
-
-from keyboards.inline import change_marks_kb, choice_marks_kb
-from lexicons.lexicons_ru import MENU_TEXT_OUR,MENU_TEXT0, PROG_MARKS_TEXT,ADD_MARKS_TEXT,DEL_MARKS_TXT_K,DEL_MARKS_TXT_K1,ADD_MARKS_TEXT1, DEL_MARKS_TXT_RES
+from keyboards.inline import change_marks_kb, choice_marks_kb, inline_menu_kb
+from lexicons.lexicons_ru import MENU_TEXT_OUR,MENU_TEXT0,START_TEXT_1,START_TEXT_2,MENU_TEXT1, PROG_MARKS_TEXT,ADD_MARKS_TEXT,DEL_MARKS_TXT_K,DEL_MARKS_TXT_K1,ADD_MARKS_TEXT1, DEL_MARKS_TXT_RES
 from math import ceil
 
 router = Router()
@@ -18,6 +17,12 @@ async def menu_handler(message: Message):
     """"Эта функция отвечает при нажатии на inline кнопку о нас"""
     print("[LOG] О нас запущен")
     await message.answer(MENU_TEXT_OUR)
+
+@router.message(F.text == MENU_TEXT1)
+async def start_handler(message:Message):
+    """"Эта функция отвечает на нажатие кнопки "Расчитать оценки" на reply клавиатуре"""
+    print("[LOG] Заново начинается рассчет среднего балла")
+    await message.answer(START_TEXT_2, reply_markup=await inline_menu_kb())
 
 @router.callback_query(F.data == "addmarks")
 async def add_marks(callback: CallbackQuery, state: FSMContext):
