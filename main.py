@@ -3,12 +3,8 @@ from asyncio import run
 from configs.config import BOT_TOKEN
 from handlers.start import router as start_router
 from handlers.menu import router as menu_router
-import logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+
+
 async def main():
     """Главная функция запуска бота"""
     bot = Bot(token = BOT_TOKEN)
