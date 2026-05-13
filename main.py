@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 async def main():
     """Главная функция запуска бота"""
     bot = Bot(token = BOT_TOKEN)
-    print(BOT_TOKEN)
     dp = Dispatcher()
 
     dp.include_router(start_router)
