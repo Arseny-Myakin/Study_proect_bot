@@ -4,7 +4,7 @@ from aiogram import Router,F
 from aiogram.types import Message, CallbackQuery
 
 from keyboards.inline import change_marks_kb, choice_marks_kb
-from lexicons.lexicons_ru import MENU_TEXT_OUR,MENU_TEXT0, DEL_MARKS_TXT,ADD_MARKS_TEXT,DEL_MARKS_TXT_K,DEL_MARKS_TXT_K1,ADD_MARKS_TEXT1, DEL_MARKS_TXT_RES
+from lexicons.lexicons_ru import MENU_TEXT_OUR,MENU_TEXT0, PROG_MARKS_TEXT,ADD_MARKS_TEXT,DEL_MARKS_TXT_K,DEL_MARKS_TXT_K1,ADD_MARKS_TEXT1, DEL_MARKS_TXT_RES
 from math import ceil
 
 router = Router()
@@ -58,14 +58,17 @@ async def process_marks(message: Message, state: FSMContext):
 
 @router.callback_query(F.data == "change")
 async def add_marks(callback: CallbackQuery, state: FSMContext):
-
+    """Эта функция показывает кнопки для выбора оценок"""
+    print("[LOG] Пользователь выбирает оценки")
     await callback.message.answer(
-        "Выберите оценку на которую вы исправите все двойки (только одно число)",
+        PROG_MARKS_TEXT,
         reply_markup=await choice_marks_kb()
     )
 
 @router.callback_query(F.data.startswith("choice"))
 async def add_marks(callback: CallbackQuery, state: FSMContext):
+    """Эта функция позволяет выбрать оценку кнопкой вместо ручного ввода, подставляя её вместо двойки"""
+    print("[LOG] Бот исправляет двойки")
     data = await state.get_data()
     marks = data.get("marks","")
     new_mark = callback.data.split("_")[-1]

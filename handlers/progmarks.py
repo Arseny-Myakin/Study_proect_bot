@@ -1,9 +1,9 @@
-from keyboards.inline import inline_progmarks_kb
+from keyboards.inline import inline_progmarks_kb, choice_marks_kb
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram import Router,F
 from aiogram.types import Message, CallbackQuery
-from lexicons.lexicons_ru import MAIN_PROGMARKS_BTNS_IN, PROG_MARKS_TEXT
+from lexicons.lexicons_ru import MAIN_PROGMARKS_BTNS_IN, PROG_MARKS_TEXT, MENU_TEXT
 
 router = Router()
 
@@ -28,9 +28,24 @@ async def progmarks_handler(message: Message, state: FSMContext):
     await message.answer(PROG_MARKS_TEXT)
     await state.set_state(AddMarksStates.progmarks)
 
-@router.message(AddMarksStates.progmarks)
-async def progress_marks(message: Message, state: FSMContext):
+@router.callback_query(F.data == "change")
+async def add_marks(callback: CallbackQuery, state: FSMContext):
+
+    await callback.message.answer(
+        "Выберите оценку на которую вы исправите все двойки (только одно число)",
+        reply_markup=await choice_marks_kb()
+    )
+
+@router.callback_query(F.data.startswith("choice"))
+async def add_marks(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
+    marks = data.get("marks","")
+    new_mark = callback.data.split("_")[-1]
+    print(new_mark,marks,marks.replace("2",new_mark))
+    new_text = marks.replace("2",new_mark)
+    fake_message = callback.message.model_copy(update={"text": new_text})
+
+    await process_marks(fake_message, state)
 
 
 
