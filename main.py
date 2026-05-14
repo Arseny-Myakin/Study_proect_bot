@@ -18,18 +18,3 @@ async def main():
     await dp.start_polling(bot)
 
 run(main())
-
-
-
-# старт - выводит кнопки и приветствие
-# кнопки:
-#
-# {
-#     "17-1":"условие задачи",
-#     "17-2":"условие задачи"
-# }
-# from random import randint
-# k = f"17-{str(randint(1,10))}"
-# text = s[k]
-# with open(k) as f:
-#     pass

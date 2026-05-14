@@ -20,7 +20,7 @@ async def menu_handler(message: Message):
 
 @router.message(F.text == MENU_TEXT1)
 async def start_handler(message:Message):
-    """"Эта функция отвечает на нажатие кнопки "Расчитать оценки" на reply клавиатуре"""
+    """"Эта функция обрабатывает на нажатие кнопки "Расчитать оценки" на reply клавиатуре"""
     print("[LOG] Заново начинается рассчет среднего балла")
     await message.answer(START_TEXT_2, reply_markup=await inline_menu_kb())
 
@@ -45,7 +45,6 @@ async def process_marks(message: Message, state: FSMContext):
     print("[LOG] Считает средний балл и количество недостоющихся пятерок до желаемого балла")
     data = await state.get_data()
     await state.update_data(marks = message.text)
-    #await state.update_data(marks = data.get('marks','') + message.text)
 
     list_marks = list(map(int, list(message.text)))
     del_marks = sum(list_marks) / len(list_marks) # рассчет среднего балла
